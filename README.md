@@ -1,95 +1,67 @@
-# patchweaver
+# 👋🧩 patchweaver
 
-Personal [Morphe](https://morphe.software) patches, laid out per the official
-[morphe-patches-template](https://github.com/MorpheApp/morphe-patches-template).
+Personal collection of [Morphe](https://morphe.software) patches. F-Droid is the first one in
+here — more may get added over time as I patch other apps I use.
 
-## What's included
+## ❓ About
 
-**Selectable install backend** — adds a setting to F-Droid (`org.fdroid.fdroid` 1.23.2,
-versionCode `1023052`) to choose how APKs get installed:
+Patches for apps I like.
 
-- System / F-Droid default (unchanged behavior)
-- [Shizuku](https://shizuku.rikka.app) — silent install via `pm install`, no confirmation UI
-- InstallerX — routed via an explicit `ACTION_INSTALL_PACKAGE` intent
-- A custom installer package, picked from a list of installed apps that actually handle that
-  intent
+### How to use these patches
 
-The hook is `InstallerFactory.create(Context, App, Apk)` — the single point where F-Droid
-normally picks between `FileInstaller` / `PrivilegedInstaller` / `SessionInstaller` /
-`DefaultInstaller`. `SessionInstaller` calls Android's `PackageInstaller` session APIs directly
-and bypasses any external install-intent handler, so the override has to happen at that
-selection point rather than further downstream.
+Click here to add these patches to Morphe: https://morphe.software/add-source?github=ispacecase/patchweaver
 
-## Project layout
+## 🩹 Patches list
 
-```
-patches/
-  src/main/kotlin/app/fdroidbackends/InstallBackendsPatch.kt
-stub/
-  # Compile-time-only stand-ins for org.fdroid.fdroid.{installer,data} classes. Installer's
-  # constructor and abstract methods are package-private/protected, so the extension classes
-  # that subclass it have to live in that exact package to link — this module lets them compile
-  # against the real signatures without bundling a real F-Droid class.
-extensions/
-  extension/
-    src/main/java/org/fdroid/fdroid/installer/...   # same package as the real Installer class
-    src/main/java/app/fdroidbackends/...             # everything else (prefs, settings UI,
-                                                       # Shizuku service)
-apply-tool/
-  # Applies a .mpp to an APK and signs it — see below.
-```
+<!-- PATCHES_START EXPANDED -->
 
-## Building
+<!-- Do not modify this section by hand. The patch list is generated when release.yml creates a
+     new release. -->
+
+#### A list of patches will automatically be shown here after the first release is created.
+
+Until then: **Selectable install backend** (F-Droid, `org.fdroid.fdroid` 1.23.2) — adds a
+setting to choose how F-Droid installs APKs: system default, Shizuku (silent, no confirmation
+UI), InstallerX, or a custom installer package picked from a list of installed apps.
+
+<!-- PATCHES_END -->
+
+### 🛠️ Building locally
 
 This repo resolves `app.morphe.patches` (the Gradle plugin) and `app.morphe:morphe-patcher` from
-local sibling checkouts instead of GitHub Packages, which requires authentication even for
-public packages:
-
-```
-some-parent-dir/
-  patchweaver/                       (this repo)
-  morphe-patches-gradle-plugin/      git clone https://github.com/MorpheApp/morphe-patches-gradle-plugin
-  morphe-patcher/                    git clone https://github.com/MorpheApp/morphe-patcher
-```
-
-Then:
+GitHub Packages, which requires an authenticated GitHub token even for public packages:
 
 ```bash
-./gradlew :patches:buildAndroid
+export GITHUB_TOKEN="$(gh auth token)"
+export GITHUB_ACTOR="$(gh api user --jq .login)"
 ```
 
-produces `patches/build/libs/patches-1.0.0.mpp`.
+(a token needs the `read:packages` scope — `gh auth refresh -s read:packages` adds it). A
+`flake.nix`/`.envrc` are included for `nix develop`/`direnv` users, which export these
+automatically.
 
-## Applying the patch
-
-Load the `.mpp` into [Morphe Manager](https://github.com/MorpheApp/morphe-manager) or
-[Morphe Desktop](https://github.com/MorpheApp/morphe-desktop) if you have either set up.
-
-Otherwise, `apply-tool` is a small standalone runner (there's no Morphe CLI to lean on) that
-applies the patch and signs the result:
+- Run `./gradlew buildAndroid`
+- The built patches `.mpp` file is found in `patches/build/libs/patches-*.mpp`
+- Patch the `.mpp` file using [Morphe Desktop](https://github.com/MorpheApp/morphe-desktop) like
+  any other patch bundle, or with `apply-tool` in this repo if you don't have that set up:
 
 ```bash
 ./gradlew :apply-tool:installDist
 
 # Generate a signing key once, if you don't have one:
-keytool -genkeypair -keystore debug.keystore -alias fdroidbackends \
-  -keyalg RSA -keysize 2048 -validity 10000 -storepass fdroidbackends -keypass fdroidbackends \
-  -dname "CN=Morphe F-Droid Backends"
+keytool -genkeypair -keystore debug.keystore -alias patchweaver \
+  -keyalg RSA -keysize 2048 -validity 10000 -storepass patchweaver -keypass patchweaver \
+  -dname "CN=patchweaver"
 
 ./apply-tool/build/install/apply-tool/bin/apply-tool \
-  path/to/org.fdroid.fdroid.apk \
-  patches/build/libs/patches-1.0.0.mpp \
-  fdroid-patched.apk \
-  debug.keystore fdroidbackends fdroidbackends fdroidbackends
+  path/to/input.apk patches/build/libs/patches-*.mpp output.apk \
+  debug.keystore patchweaver patchweaver patchweaver
 ```
 
-Installing `fdroid-patched.apk` requires uninstalling any existing F-Droid signed with a
-different key first (normal Android behavior for a different signing cert).
+See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation) for more
+information.
 
-## Status
+## 📜 License
 
-Verified on-device (Shizuku Plus + a real InstallerX build): resource/manifest patch applies,
-fingerprint matches, the extension DEX links against the real app classes, and the Shizuku
-install path works end-to-end (permission prompt, bind, `pm install`). InstallerX/custom-package
-routing is implemented and installs correctly but is still lightly tested. Uninstall flows,
-notification edge cases, and Private Space are untouched.
+patchweaver is licensed under the [GNU General Public License v3.0](LICENSE), with additional
+conditions under GPLv3 Section 7 — see [NOTICE](NOTICE).

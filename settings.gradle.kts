@@ -1,15 +1,18 @@
 rootProject.name = "patchweaver"
 
 pluginManagement {
-    // Resolve the Morphe patches Gradle plugin from a local checkout instead of GitHub
-    // Packages, which requires authentication even for public packages. Clone
-    // https://github.com/MorpheApp/morphe-patches-gradle-plugin as a sibling of this repo.
-    includeBuild("../morphe-patches-gradle-plugin")
-
     repositories {
         gradlePluginPortal()
         google()
-        mavenCentral()
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/MorpheApp/registry")
+            credentials {
+                username = providers.gradleProperty("gpr.user").orNull ?: System.getenv("GITHUB_ACTOR")
+                password = providers.gradleProperty("gpr.key").orNull ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 

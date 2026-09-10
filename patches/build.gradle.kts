@@ -1,12 +1,38 @@
 group = "app.fdroidbackends"
-version = "1.0.0"
 
 patches {
     about {
-        name = "F-Droid Install Backends"
-        description = "Adds a selectable install backend to F-Droid: system default, Shizuku, InstallerX, or a custom installer package."
+        name = "patchweaver"
+        description = "Patches for apps I like."
         source = "https://github.com/ispacecase/patchweaver"
         author = "ispacecase"
+        contact = "na"
+        website = "na"
         license = "GPLv3"
+    }
+}
+
+// Separate configuration so gson is available at runtime for the
+// generatePatchesList task but never bundled into the APK.
+val patchListGeneratorClasspath: Configuration by configurations.creating
+
+dependencies {
+    compileOnly(libs.gson)
+    patchListGeneratorClasspath(libs.gson)
+}
+
+tasks {
+    register<JavaExec>("generatePatchesList") {
+        description = "Build patch with patch list"
+
+        dependsOn(build)
+
+        classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath
+        mainClass.set("util.PatchListGeneratorKt")
+    }
+
+    // Used by gradle-semantic-release-plugin.
+    publish {
+        dependsOn("generatePatchesList")
     }
 }
