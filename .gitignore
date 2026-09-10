@@ -1,0 +1,12 @@
+.gradle/
+.kotlin/
+build/
+out/
+local.properties
+*.iml
+.idea/
+apply-tool-workspace/
+
+# Never commit signing keys.
+*.keystore
+*.jks
