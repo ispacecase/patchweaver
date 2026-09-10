@@ -1,4 +1,4 @@
-# morphe-patches
+# patchweaver
 
 Personal [Morphe](https://morphe.software) patches, laid out per the official
 [morphe-patches-template](https://github.com/MorpheApp/morphe-patches-template).
@@ -47,7 +47,7 @@ public packages:
 
 ```
 some-parent-dir/
-  morphe-patches/                    (this repo)
+  patchweaver/                       (this repo)
   morphe-patches-gradle-plugin/      git clone https://github.com/MorpheApp/morphe-patches-gradle-plugin
   morphe-patcher/                    git clone https://github.com/MorpheApp/morphe-patcher
 ```

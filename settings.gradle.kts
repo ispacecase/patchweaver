@@ -1,4 +1,4 @@
-rootProject.name = "morphe-patches"
+rootProject.name = "patchweaver"
 
 pluginManagement {
     // Resolve the Morphe patches Gradle plugin from a local checkout instead of GitHub
