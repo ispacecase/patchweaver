@@ -61,6 +61,27 @@ keytool -genkeypair -keystore debug.keystore -alias patchweaver \
 See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation) for more
 information.
 
+## 🧑‍💻 Dev usage
+
+- **Make all changes to the `dev` branch.**
+- Always use [semantic commit](https://kapeli.com/cheat_sheets/Semantic_Commits.docset/Contents/Resources/Documents/index)
+  messages: `feat:` a new feature, `fix:` a fixed problem, `chore:` anything not user-facing.
+- Commits of `fix:` and `feat:` automatically generate a new pre-release; `chore:` does not.
+- Others can apply `dev` branch releases by enabling `pre-release` in Morphe Manager patch
+  sources.
+- When `dev` is ready for a stable release, merge it into `main` (no squash, merge only).
+- **Always use semantic release (`release.yml`)** — don't manually upload or create releases;
+  it updates `patches-list.json`, `patches-bundle.json`, and `CHANGELOG.md` for you.
+
+## 🤓 Tips
+
+- See the [patcher documentation](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/1_patcher_intro.md)
+  for more on writing patches and fingerprints.
+- Don't hand-edit `patches-list.json`, `patches-bundle.json`, or `CHANGELOG.md` — `release.yml`
+  regenerates them.
+- Don't force-push over a semantic-release commit; it breaks future releases. If a release needs
+  fixing, cut a new one instead.
+
 ## 📜 License
 
 patchweaver is licensed under the [GNU General Public License v3.0](LICENSE), with additional
