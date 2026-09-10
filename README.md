@@ -1,3 +1,7 @@
+<p align="center">
+<img src="readme.png" alt="patchweaver">
+</p>
+
 # 👋🧩 patchweaver
 
 Personal collection of [Morphe](https://morphe.software) patches. F-Droid is the first one in
