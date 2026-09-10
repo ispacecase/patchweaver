@@ -18,15 +18,21 @@ Click here to add these patches to Morphe: https://morphe.software/add-source?gi
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0](https://github.com/ispacecase/patchweaver/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
+<details open>
+<summary>📦 F-Droid&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
+<br>
 
-<!-- Do not modify this section by hand. The patch list is generated when release.yml creates a
-     new release. -->
+**🎯 Supported versions:**
 
-#### A list of patches will automatically be shown here after the first release is created.
+| 1.23.2 |
+| :---: |
 
-Until then: **Selectable install backend** (F-Droid, `org.fdroid.fdroid` 1.23.2) — adds a
-setting to choose how F-Droid installs APKs: system default, Shizuku (silent, no confirmation
-UI), InstallerX, or a custom installer package picked from a list of installed apps.
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Selectable install backend](#selectable-install-backend) | Adds a setting to choose how F-Droid installs APKs: system default, Shizuku, InstallerX, or a custom installer package. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 
