@@ -1,8 +1,8 @@
 <p align="center">
-<img src="readme.png" alt="patchweaver">
+<img src="readme.png" alt="Patchweaver">
 </p>
 
-# 👋🧩 patchweaver
+# 👋🧩 Patchweaver
 
 Personal collection of [Morphe](https://morphe.software) patches. F-Droid is the first one in
 here — more may get added over time as I patch other apps I use.
@@ -88,5 +88,5 @@ information.
 
 ## 📜 License
 
-patchweaver is licensed under the [GNU General Public License v3.0](LICENSE), with additional
+Patchweaver is licensed under the [GNU General Public License v3.0](LICENSE), with additional
 conditions under GPLv3 Section 7 — see [NOTICE](NOTICE).

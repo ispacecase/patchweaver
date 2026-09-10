@@ -2,7 +2,7 @@ group = "app.fdroidbackends"
 
 patches {
     about {
-        name = "patchweaver"
+        name = "Patchweaver"
         description = "Patches for apps I like."
         source = "https://github.com/ispacecase/patchweaver"
         author = "ispacecase"
