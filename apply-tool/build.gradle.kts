@@ -28,7 +28,7 @@ dependencies {
     implementation("com.android.tools.build:apkzlib:9.1.1")
     implementation("com.android.tools.build:apksig:9.4.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("com.google.guava:guava:33.5.0-jre")
+    implementation("com.google.guava:guava:33.7.1-jre")
 }
 
 application {
