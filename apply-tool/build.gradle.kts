@@ -27,7 +27,7 @@ dependencies {
     implementation("app.morphe:morphe-patcher:1.13.0")
     implementation("com.android.tools.build:apkzlib:9.1.1")
     implementation("com.android.tools.build:apksig:9.4.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
     implementation("com.google.guava:guava:33.5.0-jre")
 }
 
